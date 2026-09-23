@@ -15,7 +15,7 @@
    LOADING DATA
    Menutup tampilan sementara data sedang diambil dari server.
    ========================================================= */
-/* =========================
+  /* =========================
    WARNA KARTU DASHBOARD
    ========================= */
 
@@ -57,6 +57,151 @@
 .pengeluaran-card b {
   color: #dc2626 !important;
 }
+
+/* =========================
+   GRAFIK PEMASUKAN & PENGELUARAN
+   ========================= */
+
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.chart-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  overflow: hidden;
+}
+
+.chart-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.chart-card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.chart-card-subtitle {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.chart-legend {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.chart-bars {
+  height: 245px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  gap: 10px;
+  padding: 18px 4px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.chart-column {
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.chart-value {
+  min-height: 18px;
+  margin-bottom: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chart-bar-track {
+  width: min(42px, 70%);
+  height: 175px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.chart-bar {
+  width: 100%;
+  min-height: 4px;
+  border-radius: 8px 8px 2px 2px;
+  transition: height 0.35s ease, transform 0.2s ease;
+}
+
+.chart-bar:hover {
+  transform: translateY(-3px);
+}
+
+.pemasukan-chart .chart-bar {
+  background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.20);
+}
+
+.pemasukan-chart .chart-value {
+  color: #1d4ed8;
+}
+
+.pengeluaran-chart .chart-bar {
+  background: linear-gradient(180deg, #f87171 0%, #dc2626 100%);
+  box-shadow: 0 5px 14px rgba(220, 38, 38, 0.20);
+}
+
+.pengeluaran-chart .chart-value {
+  color: #dc2626;
+}
+
+.chart-month {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.chart-empty {
+  grid-column: 1 / -1;
+  align-self: center;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+@media (max-width: 760px) {
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    padding: 14px;
+  }
+
+  .chart-bars {
+    gap: 6px;
+  }
+
+  .chart-value {
+    font-size: 9px;
+  }
+}
+
+
+    }
     .data-loading-overlay {
       position: fixed;
       inset: 0;
@@ -343,105 +488,211 @@
         grid-column: auto;
       }
         }
+  
+
 /* =========================
-   GRAFIK DASHBOARD
-   ========================= */
-
-.dashboard-charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
+   TRANSPARANSI KAS WARGA
+========================= */
+.transparency { margin-top: 0; }
+.transparency-title { font-size: 22px; font-weight: 800; margin-bottom: 5px; }
+.transparency-subtitle { color:#6b7280; font-size:13px; margin-bottom:18px; }
+.transparency-summary { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:20px; }
+.transparency-box { padding:18px; border-radius:15px; background:#fff; box-shadow:0 7px 22px #183b5d14; border-left:6px solid; }
+.transparency-box.income { background:#eff6ff; border-left-color:#2563eb; color:#1d4ed8; }
+.transparency-box.expense { background:#fef2f2; border-left-color:#dc2626; color:#dc2626; }
+.transparency-box.balance { background:#f0fdf4; border-left-color:#16a34a; color:#15803d; }
+.transparency-label { font-size:14px; }
+.transparency-number { display:block; margin-top:7px; font-size:23px; font-weight:800; }
+.transparency-charts { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px; }
+.transparency-card { background:#fff; border-radius:15px; padding:20px; box-shadow:0 7px 22px #183b5d14; }
+.transparency-card h3 { margin:0 0 5px; }
+.transparency-card p { margin:0 0 15px; color:#6b7280; font-size:13px; }
+.transparency-bars { height:250px; display:flex; align-items:flex-end; gap:10px; padding:10px 5px 0; border-bottom:1px solid #d1d5db; }
+.transparency-month { flex:1; height:100%; display:flex; align-items:flex-end; justify-content:center; gap:4px; position:relative; }
+.transparency-bar { width:22px; min-height:3px; border-radius:6px 6px 0 0; }
+.transparency-bar.income { background:#2563eb; }
+.transparency-bar.expense { background:#dc2626; }
+.transparency-month-label { position:absolute; bottom:-25px; font-size:11px; color:#6b7280; }
+.transparency-legend { display:flex; gap:18px; margin-top:25px; font-size:12px; }
+.legend-item { display:flex; align-items:center; gap:6px; }
+.legend-dot { width:10px; height:10px; border-radius:50%; }
+.legend-income { background:#2563eb; }
+.legend-expense { background:#dc2626; }
+.category-list { display:flex; flex-direction:column; gap:13px; }
+.category-row { display:grid; grid-template-columns:110px 1fr 110px; align-items:center; gap:10px; font-size:13px; }
+.category-name { font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.category-track { height:12px; background:#eef2f7; border-radius:20px; overflow:hidden; }
+.category-fill { height:100%; background:#dc2626; border-radius:20px; }
+.category-total { text-align:right; font-weight:700; }
+.transparency-empty { text-align:center; color:#94a3b8; padding:28px 10px; }
+@media (max-width:800px) {
+  .transparency-summary,.transparency-charts { grid-template-columns:1fr; }
+  .category-row { grid-template-columns:90px 1fr 85px; }
 }
 
-.chart-card {
+  
+
+/* =========================
+   RESUME PEMASUKAN & PENGELUARAN
+========================= */
+.resume-card {
+  margin-top: 18px;
   background: #ffffff;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 7px 22px #183b5d14;
   border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
 }
 
-.chart-title {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 6px;
+.resume-header h3 {
+  margin: 0;
+  font-size: 19px;
 }
 
-.chart-subtitle {
+.resume-header p {
+  margin: 5px 0 16px;
+  color: #64748b;
   font-size: 13px;
-  color: #6b7280;
-  margin-bottom: 15px;
 }
 
-.chart-wrapper {
-  width: 100%;
-  height: 260px;
-}
-
-.chart-bars {
-  height: 220px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
+.resume-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  padding: 10px 5px 0;
-  border-bottom: 1px solid #d1d5db;
+  margin-bottom: 20px;
 }
 
-.chart-column {
-  flex: 1;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+.resume-box {
+  border-radius: 12px;
+  padding: 14px 16px;
+  border-left: 5px solid;
 }
 
-.chart-value {
-  font-size: 10px;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 5px;
-  text-align: center;
+.resume-box.income {
+  background: #eff6ff;
+  border-left-color: #2563eb;
+  color: #1d4ed8;
 }
 
-.chart-bar {
-  width: 55%;
-  min-height: 3px;
-  border-radius: 7px 7px 0 0;
+.resume-box.expense {
+  background: #fef2f2;
+  border-left-color: #dc2626;
+  color: #b91c1c;
 }
 
-.chart-bar.income {
-  background: linear-gradient(
-    180deg,
-    #2563eb,
-    #60a5fa
-  );
+.resume-box.balance {
+  background: #f0fdf4;
+  border-left-color: #16a34a;
+  color: #15803d;
 }
 
-.chart-bar.expense {
-  background: linear-gradient(
-    180deg,
-    #dc2626,
-    #f87171
-  );
-}
-
-.chart-label {
-  margin-top: 8px;
+.resume-box-label {
   font-size: 12px;
-  color: #6b7280;
   font-weight: 600;
 }
 
-@media (max-width: 800px) {
+.resume-box-value {
+  display: block;
+  margin-top: 5px;
+  font-size: 19px;
+  font-weight: 800;
+}
 
-  .dashboard-charts {
+.resume-chart {
+  height: 270px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 5px 0;
+}
+
+.resume-column {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  position: relative;
+}
+
+.resume-bar-track {
+  height: 205px;
+  width: 30px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.resume-bar {
+  width: 100%;
+  min-height: 3px;
+  border-radius: 7px 7px 2px 2px;
+  transition: height .3s ease;
+}
+
+.resume-bar.income {
+  background: linear-gradient(180deg, #60a5fa, #2563eb);
+}
+
+.resume-bar.expense {
+  background: linear-gradient(180deg, #f87171, #dc2626);
+}
+
+.resume-month {
+  position: absolute;
+  bottom: -25px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.resume-values {
+  position: absolute;
+  top: 0;
+  font-size: 9px;
+  white-space: nowrap;
+  color: #475569;
+}
+
+.resume-legend {
+  display: flex;
+  gap: 18px;
+  margin-top: 26px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.resume-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.resume-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.resume-dot.income { background: #2563eb; }
+.resume-dot.expense { background: #dc2626; }
+
+@media (max-width: 800px) {
+  .resume-summary {
     grid-template-columns: 1fr;
   }
 
-}  </style>
+  .resume-chart {
+    gap: 5px;
+  }
+
+  .resume-bar-track {
+    width: 22px;
+  }
+}
+
+  </style>
 </head>
 
 <body>
@@ -582,7 +833,7 @@
           class="btn2"
           data-tab="rekap"
         >
-          REKAP
+          TRANSPARANSI
         </button>
 
       </nav>
@@ -597,72 +848,112 @@
         class="section active"
       >
 
-     <div class="grid">
+        <div class="grid">
 
-  <div class="card stat saldo-card">
-    Saldo
-    <b id="saldo">Rp 0</b>
-  </div>
+         <div class="card stat saldo-card">
+            Saldo
+            <b id="saldo">Rp 0</b>
+          </div>
+          
+        <div class="card stat pemasukan-card">
+          Pemasukan
+          <b id="masuk">Rp 0</b>
+        </div>
 
-  <div class="card stat pemasukan-card">
-    Pemasukan
-    <b id="masuk">Rp 0</b>
-  </div>
+          <div class="card stat pengeluaran-card">
+            Pengeluaran
+            <b id="keluar">Rp 0</b>
+          </div>
 
-  <div class="card stat pengeluaran-card">
-    Pengeluaran
-    <b id="keluar">Rp 0</b>
-  </div>
+          <div class="card stat">
+            Warga
+            <b id="jmlWarga">0</b>
+          </div>
 
-  <div class="card stat">
-    Warga
-    <b id="jmlWarga">0</b>
-  </div>
+        </div>
 
-</div>
+        <!-- =========================
+             GRAFIK PEMASUKAN & PENGELUARAN
+        ========================== -->
 
-<div class="dashboard-charts">
+        <div class="dashboard-charts">
 
-  <div class="chart-card">
+          <div class="chart-card pemasukan-chart">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Grafik Pemasukan</h3>
+                <p class="chart-card-subtitle">
+                  Pemasukan kas 6 bulan terakhir
+                </p>
+              </div>
+              <div class="chart-legend">Pemasukan</div>
+            </div>
 
-    <div class="chart-title">
-      📈 Grafik Pemasukan
-    </div>
+            <div
+              id="grafikPemasukan"
+              class="chart-bars"
+              aria-label="Grafik pemasukan 6 bulan terakhir"
+            ></div>
+          </div>
 
-    <div class="chart-subtitle">
-      Pemasukan kas 6 bulan terakhir
-    </div>
+          <div class="chart-card pengeluaran-chart">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="chart-card-title">Grafik Pengeluaran</h3>
+                <p class="chart-card-subtitle">
+                  Pengeluaran kas 6 bulan terakhir
+                </p>
+              </div>
+              <div class="chart-legend">Pengeluaran</div>
+            </div>
 
-    <div class="chart-wrapper">
-      <div
-        id="grafikPemasukan"
-        class="chart-bars"
-      ></div>
-    </div>
+            <div
+              id="grafikPengeluaran"
+              class="chart-bars"
+              aria-label="Grafik pengeluaran 6 bulan terakhir"
+            ></div>
+          </div>
 
-  </div>
+        </div>
 
+        <!-- =========================
+             RESUME PEMASUKAN & PENGELUARAN
+        ========================== -->
+        <div class="resume-card">
+          <div class="resume-header">
+            <h3>📊 Resume Pemasukan & Pengeluaran</h3>
+            <p>Ringkasan kondisi kas berdasarkan data transaksi 6 bulan terakhir.</p>
+          </div>
 
-  <div class="chart-card">
+          <div class="resume-summary">
+            <div class="resume-box income">
+              <span class="resume-box-label">Total Pemasukan</span>
+              <span id="resumePemasukan" class="resume-box-value">Rp 0</span>
+            </div>
+            <div class="resume-box expense">
+              <span class="resume-box-label">Total Pengeluaran</span>
+              <span id="resumePengeluaran" class="resume-box-value">Rp 0</span>
+            </div>
+            <div class="resume-box balance">
+              <span class="resume-box-label">Saldo Saat Ini</span>
+              <span id="resumeSaldo" class="resume-box-value">Rp 0</span>
+            </div>
+          </div>
 
-    <div class="chart-title">
-      📉 Grafik Pengeluaran
-    </div>
+          <div id="resumeKasChart" class="resume-chart"></div>
 
-    <div class="chart-subtitle">
-      Pengeluaran kas 6 bulan terakhir
-    </div>
+          <div class="resume-legend">
+            <div class="resume-legend-item">
+              <span class="resume-dot income"></span>
+              Pemasukan
+            </div>
+            <div class="resume-legend-item">
+              <span class="resume-dot expense"></span>
+              Pengeluaran
+            </div>
+          </div>
+        </div>
 
-    <div class="chart-wrapper">
-      <div
-        id="grafikPengeluaran"
-        class="chart-bars"
-      ></div>
-    </div>
-
-  </div>
-
-</div>
       </section>
 
 
@@ -1060,55 +1351,62 @@
         class="section"
       >
 
-        <div class="card">
-          <h3>Rekap Transaksi</h3>
-          
-          <div class="grid" style="margin-bottom: 15px;">
-          
-            <div class="card stat">
-              Total Pemasukan
-              <b id="rekapPemasukan">
-                Rp 0
-              </b>
-            </div>
-          
-            <div class="card stat">
-              Total Pengeluaran
-              <b id="rekapPengeluaran">
-                Rp 0
-              </b>
-            </div>
-          
-            <div class="card stat">
-              Sisa Kas
-              <b id="rekapSaldo">
-                Rp 0
-              </b>
-            </div>
-          
+        <div class="transparency">
+
+          <div class="transparency-title">Transparansi Kas Warga</div>
+          <div class="transparency-subtitle">
+            Ringkasan pemasukan, pengeluaran, saldo dan penggunaan kas Gang Tulip RT 027
           </div>
-          
-          <div class="tablewrap">
 
-            <table>
+          <div class="transparency-summary">
+            <div class="transparency-box income">
+              <div class="transparency-label">💰 Total Pemasukan</div>
+              <span id="transparansiPemasukan" class="transparency-number">Rp 0</span>
+            </div>
+            <div class="transparency-box expense">
+              <div class="transparency-label">💸 Total Pengeluaran</div>
+              <span id="transparansiPengeluaran" class="transparency-number">Rp 0</span>
+            </div>
+            <div class="transparency-box balance">
+              <div class="transparency-label">🏦 Saldo Kas</div>
+              <span id="transparansiSaldo" class="transparency-number">Rp 0</span>
+            </div>
+          </div>
 
-              <thead>
+          <div class="transparency-card">
+            <h3>📊 Pemasukan vs Pengeluaran</h3>
+            <p>Perbandingan kas selama 6 bulan terakhir</p>
+            <div id="transparansiBulanan" class="transparency-bars"></div>
+            <div class="transparency-legend">
+              <div class="legend-item"><span class="legend-dot legend-income"></span>Pemasukan</div>
+              <div class="legend-item"><span class="legend-dot legend-expense"></span>Pengeluaran</div>
+            </div>
+          </div>
 
-                <tr>
-                  <th>Tanggal</th>
-                  <th>Jenis</th>
-                  <th>Nama/Kategori</th>
-                  <th>Jumlah</th>
-                  <th>Keterangan</th>
-                  <th>Aksi</th>
-                </tr>
+          <div class="transparency-card" style="margin-top:20px">
+            <h3>💸 Pengeluaran Berdasarkan Kategori</h3>
+            <p>Rincian penggunaan kas warga</p>
+            <div id="transparansiKategori" class="category-list"></div>
+          </div>
 
-              </thead>
-
-              <tbody id="rTable"></tbody>
-
-            </table>
-
+          <div class="transparency-card" style="margin-top:20px">
+            <h3>📋 Riwayat Transaksi</h3>
+            <p>Semua pemasukan dan pengeluaran kas</p>
+            <div class="tablewrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Jenis</th>
+                    <th>Nama/Kategori</th>
+                    <th>Jumlah</th>
+                    <th>Keterangan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="transparansiTable"></tbody>
+              </table>
+            </div>
           </div>
 
         </div>
@@ -1719,8 +2017,6 @@ async function login() {
       sessionStorage.clear();
 
       location.reload();
-
-      renderDashboardCharts();
     }
 
 
@@ -2854,6 +3150,361 @@ async function addPengeluaran() {
          REKAP TRANSAKSI
       ========================= */
       
+      
+      /* =========================
+         GRAFIK PEMASUKAN & PENGELUARAN
+         6 bulan terakhir
+      ========================== */
+
+      const namaBulanGrafik = [
+        "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+        "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+      ];
+
+      function bulanKunciGrafik(tanggal) {
+        if (!tanggal) {
+          return "";
+        }
+
+        const bagian = String(tanggal).split("-");
+
+        if (bagian.length < 2) {
+          return "";
+        }
+
+        return `${bagian[0]}-${String(bagian[1]).padStart(2, "0")}`;
+      }
+
+      function enamBulanTerakhirGrafik() {
+        const hasil = [];
+        const sekarang = new Date();
+
+        for (let i = 5; i >= 0; i--) {
+          const d = new Date(
+            sekarang.getFullYear(),
+            sekarang.getMonth() - i,
+            1
+          );
+
+          const tahun = d.getFullYear();
+          const bulan = String(d.getMonth() + 1).padStart(2, "0");
+
+          hasil.push({
+            key: `${tahun}-${bulan}`,
+            label: namaBulanGrafik[d.getMonth()]
+          });
+        }
+
+        return hasil;
+      }
+
+      function formatGrafikNominal(value) {
+        const n = Number(value) || 0;
+
+        if (n >= 1000000) {
+          const juta = n / 1000000;
+          return `Rp ${juta.toLocaleString("id-ID", {
+            maximumFractionDigits: 1
+          })} jt`;
+        }
+
+        if (n >= 1000) {
+          const ribu = n / 1000;
+          return `Rp ${ribu.toLocaleString("id-ID", {
+            maximumFractionDigits: 0
+          })} rb`;
+        }
+
+        return `Rp ${n.toLocaleString("id-ID")}`;
+      }
+
+      function renderSatuGrafik(containerId, data, warnaKelas) {
+        const container =
+          document.getElementById(containerId);
+
+        if (!container) {
+          return;
+        }
+
+        if (!data.length) {
+          container.innerHTML =
+            `<div class="chart-empty">Belum ada data transaksi.</div>`;
+          return;
+        }
+
+        const max =
+          Math.max(
+            ...data.map(
+              item => Number(item.value || 0)
+            ),
+            1
+          );
+
+        container.innerHTML =
+          data
+            .map(item => {
+              const value =
+                Number(item.value || 0);
+
+              const height =
+                value > 0
+                  ? Math.max(
+                      5,
+                      (value / max) * 100
+                    )
+                  : 2;
+
+              return `
+                <div class="chart-column">
+                  <div class="chart-value">
+                    ${formatGrafikNominal(value)}
+                  </div>
+
+                  <div class="chart-bar-track">
+                    <div
+                      class="chart-bar ${warnaKelas}"
+                      style="height:${height}%"
+                      title="${item.label}: ${rp(value)}"
+                    ></div>
+                  </div>
+
+                  <div class="chart-month">
+                    ${item.label}
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+      }
+
+
+      function renderResumeKas() {
+        const totalPemasukan = (state.kas || []).reduce(
+          (sum, item) => sum + Number(item.total || 0), 0
+        );
+        const totalPengeluaran = (state.pengeluaran || []).reduce(
+          (sum, item) => sum + Number(item.jumlah || 0), 0
+        );
+        const saldo = totalPemasukan - totalPengeluaran;
+
+        const elMasuk = document.getElementById("resumePemasukan");
+        const elKeluar = document.getElementById("resumePengeluaran");
+        const elSaldo = document.getElementById("resumeSaldo");
+        const chart = document.getElementById("resumeKasChart");
+
+        if (elMasuk) elMasuk.textContent = rp(totalPemasukan);
+        if (elKeluar) elKeluar.textContent = rp(totalPengeluaran);
+        if (elSaldo) elSaldo.textContent = rp(saldo);
+        if (!chart) return;
+
+        const periode = enamBulanTerakhirGrafik();
+        const data = periode.map(item => ({
+          label: item.label,
+          income: (state.kas || [])
+            .filter(x => bulanKunciGrafik(x.tanggal) === item.key)
+            .reduce((sum, x) => sum + Number(x.total || 0), 0),
+          expense: (state.pengeluaran || [])
+            .filter(x => bulanKunciGrafik(x.tanggal) === item.key)
+            .reduce((sum, x) => sum + Number(x.jumlah || 0), 0)
+        }));
+
+        const max = Math.max(
+          ...data.map(x => Math.max(x.income, x.expense)),
+          1
+        );
+
+        chart.innerHTML = data.map(item => {
+          const incomeHeight = item.income > 0
+            ? Math.max(4, item.income / max * 100)
+            : 2;
+          const expenseHeight = item.expense > 0
+            ? Math.max(4, item.expense / max * 100)
+            : 2;
+
+          return `
+            <div class="resume-column">
+              <div class="resume-values">
+                ${formatGrafikNominal(item.income)} / ${formatGrafikNominal(item.expense)}
+              </div>
+              <div class="resume-bar-track">
+                <div class="resume-bar income"
+                     style="height:${incomeHeight}%"
+                     title="${item.label} — Pemasukan: ${rp(item.income)}"></div>
+              </div>
+              <div class="resume-bar-track">
+                <div class="resume-bar expense"
+                     style="height:${expenseHeight}%"
+                     title="${item.label} — Pengeluaran: ${rp(item.expense)}"></div>
+              </div>
+              <div class="resume-month">${item.label}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderDashboardCharts() {
+        renderResumeKas();
+
+        const periode =
+          enamBulanTerakhirGrafik();
+
+        const pemasukanPerBulan =
+          periode.map(item => ({
+            label: item.label,
+            value:
+              state.kas
+                .filter(
+                  x =>
+                    bulanKunciGrafik(x.tanggal) ===
+                    item.key
+                )
+                .reduce(
+                  (sum, x) =>
+                    sum +
+                    Number(x.total || 0),
+                  0
+                )
+          }));
+
+        const pengeluaranPerBulan =
+          periode.map(item => ({
+            label: item.label,
+            value:
+              state.pengeluaran
+                .filter(
+                  x =>
+                    bulanKunciGrafik(x.tanggal) ===
+                    item.key
+                )
+                .reduce(
+                  (sum, x) =>
+                    sum +
+                    Number(x.jumlah || 0),
+                  0
+                )
+          }));
+
+        renderSatuGrafik(
+          "grafikPemasukan",
+          pemasukanPerBulan,
+          "bar-pemasukan"
+        );
+
+        renderSatuGrafik(
+          "grafikPengeluaran",
+          pengeluaranPerBulan,
+          "bar-pengeluaran"
+        );
+      }
+
+
+      function renderTransparansiKas() {
+        const pemasukan = state.kas.reduce((sum, x) => sum + Number(x.total || 0), 0);
+        const pengeluaran = state.pengeluaran.reduce((sum, x) => sum + Number(x.jumlah || 0), 0);
+        const saldo = pemasukan - pengeluaran;
+
+        const elPemasukan = document.getElementById("transparansiPemasukan");
+        const elPengeluaran = document.getElementById("transparansiPengeluaran");
+        const elSaldo = document.getElementById("transparansiSaldo");
+        if (elPemasukan) elPemasukan.textContent = rp(pemasukan);
+        if (elPengeluaran) elPengeluaran.textContent = rp(pengeluaran);
+        if (elSaldo) elSaldo.textContent = rp(saldo);
+
+        renderTransparansiBulanan();
+        renderKategoriPengeluaran();
+        renderTabelTransparansi();
+      }
+
+      function renderTransparansiBulanan() {
+        const container = document.getElementById("transparansiBulanan");
+        if (!container) return;
+
+        const periode = enamBulanTerakhirGrafik();
+        const data = periode.map(item => ({
+          ...item,
+          income: state.kas.filter(x => bulanKunciGrafik(x.tanggal) === item.key)
+            .reduce((sum, x) => sum + Number(x.total || 0), 0),
+          expense: state.pengeluaran.filter(x => bulanKunciGrafik(x.tanggal) === item.key)
+            .reduce((sum, x) => sum + Number(x.jumlah || 0), 0)
+        }));
+
+        const max = Math.max(...data.flatMap(x => [x.income, x.expense]), 1);
+        container.innerHTML = data.map(item => {
+          const incomeHeight = item.income > 0 ? Math.max(4, (item.income / max) * 100) : 2;
+          const expenseHeight = item.expense > 0 ? Math.max(4, (item.expense / max) * 100) : 2;
+          return `
+            <div class="transparency-month" title="${esc(item.label)}">
+              <div class="transparency-bar income" style="height:${incomeHeight}%" title="Pemasukan ${esc(item.label)}: ${rp(item.income)}"></div>
+              <div class="transparency-bar expense" style="height:${expenseHeight}%" title="Pengeluaran ${esc(item.label)}: ${rp(item.expense)}"></div>
+              <div class="transparency-month-label">${esc(item.label)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderKategoriPengeluaran() {
+        const container = document.getElementById("transparansiKategori");
+        if (!container) return;
+
+        const kategori = {};
+        state.pengeluaran.forEach(item => {
+          const nama = String(item.kategori || "Lainnya").trim() || "Lainnya";
+          kategori[nama] = (kategori[nama] || 0) + Number(item.jumlah || 0);
+        });
+
+        const rows = Object.entries(kategori).sort((a,b) => b[1] - a[1]);
+        if (!rows.length) {
+          container.innerHTML = '<div class="transparency-empty">Belum ada data pengeluaran.</div>';
+          return;
+        }
+
+        const max = Math.max(...rows.map(x => x[1]), 1);
+        container.innerHTML = rows.map(([nama, jumlah]) => {
+          const width = Math.max(3, (jumlah / max) * 100);
+          return `
+            <div class="category-row">
+              <div class="category-name" title="${esc(nama)}">${esc(nama)}</div>
+              <div class="category-track"><div class="category-fill" style="width:${width}%"></div></div>
+              <div class="category-total">${rp(jumlah)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      function renderTabelTransparansi() {
+        const table = document.getElementById("transparansiTable");
+        if (!table) return;
+
+        const transaksi = [
+          ...state.kas.map(x => ({
+            id: x.id, tanggal: x.tanggal, jenis: "Pemasukan",
+            nama: x.nama, jumlah: x.total, ket: x.keterangan
+          })),
+          ...state.pengeluaran.map(x => ({
+            id: x.id, tanggal: x.tanggal, jenis: "Pengeluaran",
+            nama: x.kategori, jumlah: x.jumlah, ket: x.keterangan
+          }))
+        ].sort((a,b) => String(b.tanggal || "").localeCompare(String(a.tanggal || "")));
+
+        if (!transaksi.length) {
+          table.innerHTML = '<tr><td colspan="6" class="transparency-empty">Belum ada transaksi.</td></tr>';
+          return;
+        }
+
+        table.innerHTML = transaksi.map(x => `
+          <tr>
+            <td>${formatTanggal(x.tanggal)}</td>
+            <td>${esc(x.jenis)}</td>
+            <td>${esc(x.nama)}</td>
+            <td>${rp(x.jumlah)}</td>
+            <td>${esc(x.ket)}</td>
+            <td>
+              <button type="button" class="danger" onclick="${x.jenis === "Pemasukan" ? `delKas('${esc(x.id)}')` : `delPengeluaran('${esc(x.id)}')`}">Hapus</button>
+            </td>
+          </tr>
+        `).join("");
+      }
+
       function renderRekap() {
         /*
          * TOTAL PEMASUKAN
@@ -3010,6 +3661,9 @@ async function addPengeluaran() {
               `
             )
             .join("");
+
+        renderDashboardCharts();
+        renderTransparansiKas();
       }
 
 
@@ -3175,181 +3829,7 @@ if (token) {
    * Tidak perlu menjalankan timer auto logout.
    */
 }
-/* =====================================================
-   GRAFIK PEMASUKAN & PENGELUARAN
-   ===================================================== */
-
-function getTanggalGrafik(item) {
-  return (
-    item.tanggal ||
-    item.date ||
-    item.created_at ||
-    item.createdAt ||
-    item.waktu ||
-    ""
-  );
-}
-
-function getBulanKeyGrafik(tanggal) {
-  if (!tanggal) return "";
-
-  const d = new Date(tanggal);
-
-  if (isNaN(d.getTime())) return "";
-
-  return d.getFullYear() + "-" +
-    String(d.getMonth() + 1).padStart(2, "0");
-}
-
-function get6BulanTerakhirGrafik() {
-
-  const hasil = [];
-  const sekarang = new Date();
-
-  for (let i = 5; i >= 0; i--) {
-
-    const d = new Date(
-      sekarang.getFullYear(),
-      sekarang.getMonth() - i,
-      1
-    );
-
-    const key =
-      d.getFullYear() +
-      "-" +
-      String(d.getMonth() + 1).padStart(2, "0");
-
-    const nama = d.toLocaleDateString("id-ID", {
-      month: "short"
-    });
-
-    hasil.push({
-      key: key,
-      nama: nama
-    });
-  }
-
-  return hasil;
-}
-
-function formatGrafikRupiah(angka) {
-
-  angka = Number(angka || 0);
-
-  if (angka >= 1000000) {
-    return "Rp " +
-      (angka / 1000000).toFixed(1) +
-      " jt";
-  }
-
-  if (angka >= 1000) {
-    return "Rp " +
-      (angka / 1000).toFixed(0) +
-      " rb";
-  }
-
-  return "Rp " + angka.toLocaleString("id-ID");
-}
-
-
-function renderGrafikKas(containerId, data, tipe) {
-
-  const container = document.getElementById(containerId);
-
-  if (!container) return;
-
-  const bulan = get6BulanTerakhirGrafik();
-
-  const hasil = bulan.map(b => {
-
-    let total = 0;
-
-    data.forEach(item => {
-
-      const tanggal = getTanggalGrafik(item);
-
-      const key = getBulanKeyGrafik(tanggal);
-
-      if (key === b.key) {
-
-        if (tipe === "pemasukan") {
-          total += Number(item.total || item.jumlah || 0);
-        }
-
-        if (tipe === "pengeluaran") {
-          total += Number(item.jumlah || item.total || 0);
-        }
-
-      }
-
-    });
-
-    return {
-      nama: b.nama,
-      total: total
-    };
-
-  });
-
-
-  const nilaiMaksimum = Math.max(
-    ...hasil.map(x => x.total),
-    1
-  );
-
-
-  container.innerHTML = hasil.map(item => {
-
-    const tinggi =
-      item.total > 0
-        ? Math.max(
-            (item.total / nilaiMaksimum) * 100,
-            4
-          )
-        : 2;
-
-    return `
-      <div class="chart-column">
-
-        <div class="chart-value">
-          ${formatGrafikRupiah(item.total)}
-        </div>
-
-        <div
-          class="chart-bar ${tipe === "pemasukan" ? "income" : "expense"}"
-          style="height:${tinggi}%"
-          title="${formatGrafikRupiah(item.total)}"
-        ></div>
-
-        <div class="chart-label">
-          ${item.nama}
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
-
-}
-
-
-function renderDashboardCharts() {
-
-  if (typeof state === "undefined") return;
-
-  renderGrafikKas(
-    "grafikPemasukan",
-    state.kas || [],
-    "pemasukan"
-  );
-
-  renderGrafikKas(
-    "grafikPengeluaran",
-    state.pengeluaran || [],
-    "pengeluaran"
-  );
-
-}  </script>
+  </script>
 
 </body>
 
