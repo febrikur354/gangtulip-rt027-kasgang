@@ -343,7 +343,105 @@
         grid-column: auto;
       }
         }
-  </style>
+/* =========================
+   GRAFIK DASHBOARD
+   ========================= */
+
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.chart-card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 7px 22px #183b5d14;
+  border: 1px solid #e5e7eb;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.chart-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 15px;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 260px;
+}
+
+.chart-bars {
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 12px;
+  padding: 10px 5px 0;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.chart-column {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.chart-value {
+  font-size: 10px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.chart-bar {
+  width: 55%;
+  min-height: 3px;
+  border-radius: 7px 7px 0 0;
+}
+
+.chart-bar.income {
+  background: linear-gradient(
+    180deg,
+    #2563eb,
+    #60a5fa
+  );
+}
+
+.chart-bar.expense {
+  background: linear-gradient(
+    180deg,
+    #dc2626,
+    #f87171
+  );
+}
+
+.chart-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+@media (max-width: 800px) {
+
+  .dashboard-charts {
+    grid-template-columns: 1fr;
+  }
+
+}  </style>
 </head>
 
 <body>
@@ -499,34 +597,32 @@
         class="section active"
       >
 
-        <div class="grid">
+     <div class="grid">
+
+  <div class="card stat saldo-card">
+    Saldo
+    <b id="saldo">Rp 0</b>
+  </div>
+
+  <div class="card stat pemasukan-card">
+    Pemasukan
+    <b id="masuk">Rp 0</b>
+  </div>
+
+  <div class="card stat pengeluaran-card">
+    Pengeluaran
+    <b id="keluar">Rp 0</b>
+  </div>
+
+  <div class="card stat">
+    Warga
+    <b id="jmlWarga">0</b>
+  </div>
+
+</div>
+
 <div class="dashboard-charts">
-<div class="dashboard-charts">
 
-         <div class="card stat saldo-card">
-            Saldo
-            <b id="saldo">Rp 0</b>
-          </div>
-          
-        <div class="card stat pemasukan-card">
-          Pemasukan
-          <b id="masuk">Rp 0</b>
-        </div>
-
-          <div class="card stat pengeluaran-card">
-            Pengeluaran
-            <b id="keluar">Rp 0</b>
-          </div>
-
-          <div class="card stat">
-            Warga
-            <b id="jmlWarga">0</b>
-          </div>
-
-        </div>
-<div class="dashboard-charts">
-
-  <!-- GRAFIK PEMASUKAN -->
   <div class="chart-card">
 
     <div class="chart-title">
@@ -538,13 +634,15 @@
     </div>
 
     <div class="chart-wrapper">
-      <div id="grafikPemasukan" class="chart-bars"></div>
+      <div
+        id="grafikPemasukan"
+        class="chart-bars"
+      ></div>
     </div>
 
   </div>
 
 
-  <!-- GRAFIK PENGELUARAN -->
   <div class="chart-card">
 
     <div class="chart-title">
@@ -556,7 +654,10 @@
     </div>
 
     <div class="chart-wrapper">
-      <div id="grafikPengeluaran" class="chart-bars"></div>
+      <div
+        id="grafikPengeluaran"
+        class="chart-bars"
+      ></div>
     </div>
 
   </div>
@@ -1743,6 +1844,7 @@ async function login() {
       renderSearch();
 
       renderRekap();
+      renderDashboardCharts();
     }
       /* =========================================================
          DATA LOADING STATE
