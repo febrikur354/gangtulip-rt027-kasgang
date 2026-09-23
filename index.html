@@ -3623,44 +3623,8 @@ async function addPengeluaran() {
             )
         );
       
-        rTable.innerHTML =
-          rekap
-            .map(
-              x => `
-                <tr>
-                  <td>
-                    ${formatTanggal(x.tanggal)}
-                  </td>
-      
-                  <td>
-                    ${x.jenis}
-                  </td>
-      
-                  <td>
-                    ${esc(x.nama)}
-                  </td>
-      
-                  <td>
-                    ${rp(x.jumlah)}
-                  </td>
-      
-                  <td>
-                    ${esc(x.ket)}
-                  </td>
-
-                  <td>
-                    <button
-                      type="button"
-                      class="danger"
-                      onclick="${x.jenis === "Kas" ? `delKas('${esc(x.id)}')` : `delPengeluaran('${esc(x.id)}')`}"
-                    >
-                      Hapus
-                    </button>
-                  </td>
-                </tr>
-              `
-            )
-            .join("");
+        // Tabel rekap lama sudah digantikan oleh tabel Transparansi Kas.
+        // Render tabel transparansi dilakukan oleh renderTransparansiKas.
 
         renderDashboardCharts();
         renderTransparansiKas();
