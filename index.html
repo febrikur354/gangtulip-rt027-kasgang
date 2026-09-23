@@ -15,56 +15,48 @@
    LOADING DATA
    Menutup tampilan sementara data sedang diambil dari server.
    ========================================================= */
-  /* KARTU SALDO */
-/* KARTU SALDO */
+/* =========================
+   WARNA KARTU DASHBOARD
+   ========================= */
+
+/* SALDO KAS — HIJAU */
 .saldo-card {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(134, 239, 172, 0.55) 0%,
-      rgba(187, 247, 208, 0.38) 38%,
-      rgba(191, 219, 254, 0.38) 68%,
-      rgba(221, 214, 254, 0.55) 100%
-    ) !important;
-
-  border: 1px solid rgba(255, 255, 255, 0.75);
-
-  box-shadow:
-    0 10px 25px rgba(34, 197, 94, 0.12);
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 55%, #86efac 100%) !important;
+  border: 1px solid #4ade80 !important;
+  border-left: 6px solid #16a34a !important;
+  box-shadow: 0 10px 25px rgba(22, 163, 74, 0.18) !important;
+  color: #166534 !important;
 }
-    /* KARTU PENGELUARAN */
-.pengeluaran-card {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(254, 202, 202, 0.55) 0%,
-      rgba(254, 226, 226, 0.40) 38%,
-      rgba(254, 205, 211, 0.38) 68%,
-      rgba(255, 237, 213, 0.50) 100%
-    ) !important;
 
-  border: 1px solid rgba(248, 113, 113, 0.45);
-
-  box-shadow:
-    0 10px 25px rgba(239, 68, 68, 0.10);
+.saldo-card b {
+  color: #15803d !important;
 }
-    /* KARTU PEMASUKAN */
+
+/* PEMASUKAN — BIRU */
 .pemasukan-card {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(147, 197, 253, 0.55) 0%,
-      rgba(191, 219, 254, 0.40) 38%,
-      rgba(186, 230, 253, 0.38) 68%,
-      rgba(224, 242, 254, 0.55) 100%
-    ) !important;
-
-  border: 1px solid rgba(96, 165, 250, 0.45);
-
-  box-shadow:
-    0 10px 25px rgba(59, 130, 246, 0.10);
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 55%, #93c5fd 100%) !important;
+  border: 1px solid #60a5fa !important;
+  border-left: 6px solid #2563eb !important;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.18) !important;
+  color: #1e40af !important;
 }
-    }
+
+.pemasukan-card b {
+  color: #1d4ed8 !important;
+}
+
+/* PENGELUARAN — MERAH */
+.pengeluaran-card {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 55%, #fca5a5 100%) !important;
+  border: 1px solid #f87171 !important;
+  border-left: 6px solid #dc2626 !important;
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.18) !important;
+  color: #991b1b !important;
+}
+
+.pengeluaran-card b {
+  color: #dc2626 !important;
+}
     .data-loading-overlay {
       position: fixed;
       inset: 0;
