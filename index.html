@@ -500,7 +500,33 @@
       >
 
         <div class="grid">
+<div class="dashboard-charts">
 
+  <!-- GRAFIK PEMASUKAN -->
+  <div class="chart-card">
+    <div class="chart-title">📈 Grafik Pemasukan</div>
+    <div class="chart-subtitle">
+      Pemasukan kas 6 bulan terakhir
+    </div>
+
+    <div class="chart-wrapper">
+      <div id="grafikPemasukan" class="chart-bars"></div>
+    </div>
+  </div>
+
+  <!-- GRAFIK PENGELUARAN -->
+  <div class="chart-card">
+    <div class="chart-title">📉 Grafik Pengeluaran</div>
+    <div class="chart-subtitle">
+      Pengeluaran kas 6 bulan terakhir
+    </div>
+
+    <div class="chart-wrapper">
+      <div id="grafikPengeluaran" class="chart-bars"></div>
+    </div>
+  </div>
+
+</div>
          <div class="card stat saldo-card">
             Saldo
             <b id="saldo">Rp 0</b>
@@ -1579,6 +1605,8 @@ async function login() {
       sessionStorage.clear();
 
       location.reload();
+
+      renderDashboardCharts();
     }
 
 
@@ -3032,7 +3060,181 @@ if (token) {
    * Tidak perlu menjalankan timer auto logout.
    */
 }
-  </script>
+/* =====================================================
+   GRAFIK PEMASUKAN & PENGELUARAN
+   ===================================================== */
+
+function getTanggalGrafik(item) {
+  return (
+    item.tanggal ||
+    item.date ||
+    item.created_at ||
+    item.createdAt ||
+    item.waktu ||
+    ""
+  );
+}
+
+function getBulanKeyGrafik(tanggal) {
+  if (!tanggal) return "";
+
+  const d = new Date(tanggal);
+
+  if (isNaN(d.getTime())) return "";
+
+  return d.getFullYear() + "-" +
+    String(d.getMonth() + 1).padStart(2, "0");
+}
+
+function get6BulanTerakhirGrafik() {
+
+  const hasil = [];
+  const sekarang = new Date();
+
+  for (let i = 5; i >= 0; i--) {
+
+    const d = new Date(
+      sekarang.getFullYear(),
+      sekarang.getMonth() - i,
+      1
+    );
+
+    const key =
+      d.getFullYear() +
+      "-" +
+      String(d.getMonth() + 1).padStart(2, "0");
+
+    const nama = d.toLocaleDateString("id-ID", {
+      month: "short"
+    });
+
+    hasil.push({
+      key: key,
+      nama: nama
+    });
+  }
+
+  return hasil;
+}
+
+function formatGrafikRupiah(angka) {
+
+  angka = Number(angka || 0);
+
+  if (angka >= 1000000) {
+    return "Rp " +
+      (angka / 1000000).toFixed(1) +
+      " jt";
+  }
+
+  if (angka >= 1000) {
+    return "Rp " +
+      (angka / 1000).toFixed(0) +
+      " rb";
+  }
+
+  return "Rp " + angka.toLocaleString("id-ID");
+}
+
+
+function renderGrafikKas(containerId, data, tipe) {
+
+  const container = document.getElementById(containerId);
+
+  if (!container) return;
+
+  const bulan = get6BulanTerakhirGrafik();
+
+  const hasil = bulan.map(b => {
+
+    let total = 0;
+
+    data.forEach(item => {
+
+      const tanggal = getTanggalGrafik(item);
+
+      const key = getBulanKeyGrafik(tanggal);
+
+      if (key === b.key) {
+
+        if (tipe === "pemasukan") {
+          total += Number(item.total || item.jumlah || 0);
+        }
+
+        if (tipe === "pengeluaran") {
+          total += Number(item.jumlah || item.total || 0);
+        }
+
+      }
+
+    });
+
+    return {
+      nama: b.nama,
+      total: total
+    };
+
+  });
+
+
+  const nilaiMaksimum = Math.max(
+    ...hasil.map(x => x.total),
+    1
+  );
+
+
+  container.innerHTML = hasil.map(item => {
+
+    const tinggi =
+      item.total > 0
+        ? Math.max(
+            (item.total / nilaiMaksimum) * 100,
+            4
+          )
+        : 2;
+
+    return `
+      <div class="chart-column">
+
+        <div class="chart-value">
+          ${formatGrafikRupiah(item.total)}
+        </div>
+
+        <div
+          class="chart-bar ${tipe === "pemasukan" ? "income" : "expense"}"
+          style="height:${tinggi}%"
+          title="${formatGrafikRupiah(item.total)}"
+        ></div>
+
+        <div class="chart-label">
+          ${item.nama}
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+
+}
+
+
+function renderDashboardCharts() {
+
+  if (typeof state === "undefined") return;
+
+  renderGrafikKas(
+    "grafikPemasukan",
+    state.kas || [],
+    "pemasukan"
+  );
+
+  renderGrafikKas(
+    "grafikPengeluaran",
+    state.pengeluaran || [],
+    "pengeluaran"
+  );
+
+}  </script>
 
 </body>
 
