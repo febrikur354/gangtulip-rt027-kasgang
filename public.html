@@ -293,6 +293,201 @@
 
     }
 
+
+    /* =========================
+       GRAFIK TRANSPARANSI PUBLIK
+    ========================== */
+    .public-charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .public-chart-card {
+      background: #fff;
+      border-radius: 15px;
+      padding: 18px;
+      box-shadow: 0 7px 22px rgba(24, 59, 93, 0.08);
+    }
+
+    .public-chart-card.full {
+      grid-column: 1 / -1;
+    }
+
+    .public-chart-title {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .public-chart-subtitle {
+      margin: 0 0 16px;
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .public-chart {
+      min-height: 245px;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      padding: 18px 8px 8px;
+      border-bottom: 1px solid #e6eaf0;
+      overflow-x: auto;
+    }
+
+    .public-chart-column {
+      min-width: 62px;
+      flex: 1;
+      height: 215px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+    }
+
+    .public-chart-values {
+      font-size: 10px;
+      color: #64748b;
+      margin-bottom: 5px;
+      white-space: nowrap;
+    }
+
+    .public-bar-area {
+      width: 100%;
+      height: 170px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .public-bar {
+      width: min(24px, 38%);
+      min-height: 3px;
+      border-radius: 7px 7px 2px 2px;
+    }
+
+    .public-bar.income,
+    .public-single-bar {
+      background: #1769d1;
+    }
+
+    .public-bar.expense,
+    .public-single-bar.expense {
+      background: #c62828;
+    }
+
+    .public-month {
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #475569;
+      white-space: nowrap;
+    }
+
+    .public-single-bar {
+      width: min(42px, 55%);
+      min-height: 3px;
+      border-radius: 8px 8px 2px 2px;
+    }
+
+    .public-legend {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 14px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .public-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .public-legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .public-legend-dot.income {
+      background: #1769d1;
+    }
+
+    .public-legend-dot.expense {
+      background: #c62828;
+    }
+
+    .public-resume {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .public-resume-box {
+      border-radius: 12px;
+      padding: 14px;
+      background: #f7f9fc;
+      border: 1px solid #e6eaf0;
+    }
+
+    .public-resume-label {
+      display: block;
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .public-resume-value {
+      display: block;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .public-resume-box.income .public-resume-value {
+      color: #1769d1;
+    }
+
+    .public-resume-box.expense .public-resume-value {
+      color: #c62828;
+    }
+
+    .public-resume-box.balance .public-resume-value {
+      color: #18794e;
+    }
+
+    @media (max-width: 800px) {
+      .public-charts {
+        grid-template-columns: 1fr;
+      }
+
+      .public-chart-card.full {
+        grid-column: auto;
+      }
+
+      .public-resume {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .public-chart-column {
+        min-width: 58px;
+      }
+
+      .public-chart-values {
+        font-size: 9px;
+      }
+    }
+
   </style>
 
 </head>
@@ -459,7 +654,65 @@
            PEMASUKAN
       ========================== -->
 
-      <div class="card">
+      
+      <!-- =========================
+           GRAFIK TRANSPARANSI
+      ========================== -->
+      <div class="public-charts">
+
+        <div class="public-chart-card">
+          <h2 class="public-chart-title">📈 Grafik Pemasukan</h2>
+          <p class="public-chart-subtitle">
+            Pemasukan kas selama 6 bulan terakhir
+          </p>
+          <div id="publicGrafikPemasukan" class="public-chart"></div>
+        </div>
+
+        <div class="public-chart-card">
+          <h2 class="public-chart-title">📉 Grafik Pengeluaran</h2>
+          <p class="public-chart-subtitle">
+            Pengeluaran kas selama 6 bulan terakhir
+          </p>
+          <div id="publicGrafikPengeluaran" class="public-chart"></div>
+        </div>
+
+        <div class="public-chart-card full">
+          <h2 class="public-chart-title">📊 Resume Pemasukan vs Pengeluaran</h2>
+          <p class="public-chart-subtitle">
+            Perbandingan pemasukan dan pengeluaran kas selama 6 bulan terakhir
+          </p>
+          <div id="publicResumeKas" class="public-chart"></div>
+
+          <div class="public-legend">
+            <span class="public-legend-item">
+              <span class="public-legend-dot income"></span>
+              Pemasukan
+            </span>
+            <span class="public-legend-item">
+              <span class="public-legend-dot expense"></span>
+              Pengeluaran
+            </span>
+          </div>
+
+          <div class="public-resume">
+            <div class="public-resume-box income">
+              <span class="public-resume-label">Total Pemasukan</span>
+              <span id="publicResumePemasukan" class="public-resume-value">Rp 0</span>
+            </div>
+            <div class="public-resume-box expense">
+              <span class="public-resume-label">Total Pengeluaran</span>
+              <span id="publicResumePengeluaran" class="public-resume-value">Rp 0</span>
+            </div>
+            <div class="public-resume-box balance">
+              <span class="public-resume-label">Saldo Kas</span>
+              <span id="publicResumeSaldo" class="public-resume-value">Rp 0</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+<div class="card">
 
         <h2 class="section-title">
           Riwayat Pemasukan Kas
@@ -731,6 +984,221 @@ function formatTanggal(
    LOAD PUBLIC DATA
 ========================== */
 
+    /* =========================
+       GRAFIK TRANSPARANSI PUBLIK
+    ========================== */
+
+    function publicMonthKey(value) {
+      const parts = String(value || "").split("-");
+      if (parts.length !== 3) return "";
+      return parts[0] + "-" + parts[1];
+    }
+
+    function publicMonthLabel(key) {
+      const names = [
+        "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+        "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+      ];
+      const parts = String(key || "").split("-");
+      if (parts.length !== 2) return key;
+      return names[Number(parts[1]) - 1] + " " + parts[0];
+    }
+
+    function publicLastSixMonths() {
+      const now = new Date();
+      const result = [];
+
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date(
+          now.getFullYear(),
+          now.getMonth() - i,
+          1
+        );
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, "0");
+
+        result.push({
+          key: year + "-" + month,
+          label: publicMonthLabel(year + "-" + month)
+        });
+      }
+
+      return result;
+    }
+
+    function publicFormatChartNominal(value) {
+      const n = Number(value || 0);
+
+      if (n >= 1000000) {
+        return "Rp " + (n / 1000000).toFixed(1) + " jt";
+      }
+
+      if (n >= 1000) {
+        return "Rp " + Math.round(n / 1000) + " rb";
+      }
+
+      return "Rp " + Math.round(n);
+    }
+
+    function renderPublicCharts(kasRows, pengeluaranRows, summary) {
+      const kas = Array.isArray(kasRows) ? kasRows : [];
+      const pengeluaran = Array.isArray(pengeluaranRows)
+        ? pengeluaranRows
+        : [];
+
+      const periode = publicLastSixMonths();
+
+      const data = periode.map(item => ({
+        label: item.label,
+        key: item.key,
+        income: kas
+          .filter(x => publicMonthKey(x.tanggal) === item.key)
+          .reduce(
+            (sum, x) => sum + Number(x.jumlah || x.total || 0),
+            0
+          ),
+        expense: pengeluaran
+          .filter(x => publicMonthKey(x.tanggal) === item.key)
+          .reduce(
+            (sum, x) => sum + Number(x.jumlah || 0),
+            0
+          )
+      }));
+
+      const maxIncome = Math.max(...data.map(x => x.income), 1);
+      const maxExpense = Math.max(...data.map(x => x.expense), 1);
+      const maxCombined = Math.max(
+        ...data.map(x => Math.max(x.income, x.expense)),
+        1
+      );
+
+      const incomeChart =
+        document.getElementById("publicGrafikPemasukan");
+      const expenseChart =
+        document.getElementById("publicGrafikPengeluaran");
+      const resumeChart =
+        document.getElementById("publicResumeKas");
+
+      if (incomeChart) {
+        incomeChart.innerHTML = data.map(item => {
+          const height = item.income > 0
+            ? Math.max(4, item.income / maxIncome * 100)
+            : 2;
+
+          return `
+            <div class="public-chart-column">
+              <div class="public-chart-values">
+                ${publicFormatChartNominal(item.income)}
+              </div>
+              <div class="public-bar-area">
+                <div
+                  class="public-single-bar"
+                  style="height:${height}%"
+                  title="${esc(item.label)} — Pemasukan: ${rupiah(item.income)}"
+                ></div>
+              </div>
+              <div class="public-month">${esc(item.label)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      if (expenseChart) {
+        expenseChart.innerHTML = data.map(item => {
+          const height = item.expense > 0
+            ? Math.max(4, item.expense / maxExpense * 100)
+            : 2;
+
+          return `
+            <div class="public-chart-column">
+              <div class="public-chart-values">
+                ${publicFormatChartNominal(item.expense)}
+              </div>
+              <div class="public-bar-area">
+                <div
+                  class="public-single-bar expense"
+                  style="height:${height}%"
+                  title="${esc(item.label)} — Pengeluaran: ${rupiah(item.expense)}"
+                ></div>
+              </div>
+              <div class="public-month">${esc(item.label)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      if (resumeChart) {
+        resumeChart.innerHTML = data.map(item => {
+          const incomeHeight = item.income > 0
+            ? Math.max(4, item.income / maxCombined * 100)
+            : 2;
+          const expenseHeight = item.expense > 0
+            ? Math.max(4, item.expense / maxCombined * 100)
+            : 2;
+
+          return `
+            <div class="public-chart-column">
+              <div class="public-chart-values">
+                ${publicFormatChartNominal(item.income)}
+                /
+                ${publicFormatChartNominal(item.expense)}
+              </div>
+
+              <div class="public-bar-area">
+                <div
+                  class="public-bar income"
+                  style="height:${incomeHeight}%"
+                  title="${esc(item.label)} — Pemasukan: ${rupiah(item.income)}"
+                ></div>
+
+                <div
+                  class="public-bar expense"
+                  style="height:${expenseHeight}%"
+                  title="${esc(item.label)} — Pengeluaran: ${rupiah(item.expense)}"
+                ></div>
+              </div>
+
+              <div class="public-month">${esc(item.label)}</div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      const totalPemasukan = Number(
+        summary?.totalPemasukan ??
+        kas.reduce(
+          (sum, x) => sum + Number(x.jumlah || x.total || 0),
+          0
+        )
+      );
+
+      const totalPengeluaran = Number(
+        summary?.totalPengeluaran ??
+        pengeluaran.reduce(
+          (sum, x) => sum + Number(x.jumlah || 0),
+          0
+        )
+      );
+
+      const saldo = Number(
+        summary?.saldo ??
+        (totalPemasukan - totalPengeluaran)
+      );
+
+      const elMasuk =
+        document.getElementById("publicResumePemasukan");
+      const elKeluar =
+        document.getElementById("publicResumePengeluaran");
+      const elSaldo =
+        document.getElementById("publicResumeSaldo");
+
+      if (elMasuk) elMasuk.textContent = rupiah(totalPemasukan);
+      if (elKeluar) elKeluar.textContent = rupiah(totalPengeluaran);
+      if (elSaldo) elSaldo.textContent = rupiah(saldo);
+    }
+
+
+
 async function loadPublicData(forceRefresh = false) {
 
   const status =
@@ -817,7 +1285,15 @@ async function loadPublicData(forceRefresh = false) {
     );
 
 
-    kasLoading.style.display =
+    
+
+    renderPublicCharts(
+      data.kas || [],
+      data.pengeluaran || [],
+      data.summary || {}
+    );
+
+kasLoading.style.display =
       "none";
 
 
