@@ -475,6 +475,40 @@
       color: #18794e;
     }
 
+
+    /* =========================
+       AKSI DATA WARGA
+    ========================= */
+    .warga-actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .edit-warga-btn {
+      background: #f59e0b;
+      color: #fff;
+    }
+
+    .edit-warga-btn:hover {
+      background: #d97706;
+    }
+
+    .cancel-edit-btn {
+      background: #64748b;
+      color: #fff;
+      margin-left: 6px;
+    }
+
+    .cancel-edit-btn:hover {
+      background: #475569;
+    }
+
+    .editing-warga {
+      background: #fff7ed !important;
+      border: 1px solid #fdba74 !important;
+    }
+
     @media (max-width: 800px) {
       .grid {
         grid-template-columns: 1fr 1fr;
@@ -968,9 +1002,9 @@
 
         <div class="card">
 
-          <h3>Tambah Data Warga</h3>
+          <h3 id="wargaFormTitle">Tambah Data Warga</h3>
 
-          <div class="formgrid">
+          <div class="formgrid" id="wargaFormCard">
 
             <div>
               Nama
@@ -1000,10 +1034,21 @@
             <div class="full">
 
               <button
+                id="wSaveButton"
                 class="btn"
                 onclick="addWarga()"
               >
                 Simpan
+              </button>
+
+              <button
+                id="wCancelButton"
+                type="button"
+                class="cancel-edit-btn"
+                style="display:none"
+                onclick="cancelEditWarga()"
+              >
+                Batal Edit
               </button>
 
               <span id="wMsg"></span>
@@ -1033,7 +1078,7 @@
                   <th>Blok</th>
                   <th>HP</th>
                   <th>Status</th>
-                  <th></th>
+                  <th>Aksi</th>
                 </tr>
 
               </thead>
@@ -1465,6 +1510,7 @@
     };
 
     let saving = false;
+    let editingWargaIndex = -1;
     /* =========================================================
    AUTO LOGOUT KARENA TIDAK ADA AKTIVITAS
    ========================================================= */
@@ -2109,12 +2155,22 @@ async function login() {
                 <td>${esc(x.status)}</td>
 
                 <td>
-                  <button
-                    class="danger"
-                    onclick="delWarga(${i})"
-                  >
-                    Hapus
-                  </button>
+                  <div class="warga-actions">
+                    <button
+                      type="button"
+                      class="edit-warga-btn"
+                      onclick="editWarga(${i})"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      class="danger"
+                      onclick="delWarga(${i})"
+                    >
+                      Hapus
+                    </button>
+                  </div>
                 </td>
               </tr>
             `
@@ -2312,61 +2368,109 @@ async function addWarga() {
 
   try {
 
-    const nama =
-      wNama.value.trim();
-
-
-    /* =========================
-       VALIDASI NAMA
-    ========================= */
+    const nama = wNama.value.trim();
+    const blok = wBlok.value.trim();
+    const hp = wHp.value.trim();
+    const status = wStatus.value;
 
     if (!nama) {
-
-      return alert(
-        "Nama warga wajib diisi."
-      );
+      return alert("Nama warga wajib diisi.");
     }
 
-
-    /*
-     * Normalisasi nama untuk pemeriksaan duplikat.
-     *
-     * Contoh:
-     * "Budi"
-     * " budi "
-     * "BUDI"
-     *
-     * semuanya dianggap sama.
-     */
-
-    const namaNormal =
-      nama.toLowerCase();
-
-
     /* =========================
-       CEGAH DATA WARGA GANDA
-    ========================= */
+       MODE EDIT
+    ========================== */
+    if (editingWargaIndex >= 0) {
 
-    const sudahAda =
-      state.warga.some(item => {
+      const index = editingWargaIndex;
+      const wargaLama = state.warga[index];
 
-        const namaLama =
-          String(
-            item.nama || ""
-          )
-            .trim()
-            .toLowerCase();
+      if (!wargaLama) {
+        cancelEditWarga();
+        return alert("Data warga tidak ditemukan.");
+      }
 
-        return (
-          namaLama ===
-          namaNormal
-        );
+      const namaNormal = nama.toLowerCase();
 
+      const namaDuplikat = state.warga.some((item, itemIndex) => {
+        if (itemIndex === index) return false;
+
+        return String(item.nama || "")
+          .trim()
+          .toLowerCase() === namaNormal;
       });
 
+      if (namaDuplikat) {
+        return alert(
+          "Nama warga sudah digunakan oleh warga lain.\n\n" +
+          `Nama: ${nama}`
+        );
+      }
+
+      const namaLama = String(wargaLama.nama || "").trim();
+
+      /*
+       * Jika nama warga berubah, riwayat pembayaran kas
+       * ikut diperbarui agar tetap terhubung dengan warga.
+       */
+      const nextKas = state.kas.map(item => {
+        const namaTransaksi = String(item.nama || "").trim();
+
+        if (
+          namaTransaksi.toLowerCase() ===
+          namaLama.toLowerCase()
+        ) {
+          return {
+            ...item,
+            nama: nama
+          };
+        }
+
+        return item;
+      });
+
+      const updatedWarga = {
+        ...wargaLama,
+        nama,
+        blok,
+        hp,
+        status
+      };
+
+      const nextWarga = [...state.warga];
+      nextWarga[index] = updatedWarga;
+
+      const nextState = {
+        ...state,
+        warga: nextWarga,
+        kas: nextKas
+      };
+
+      await save(nextState, "wMsg");
+
+      cancelEditWarga(false);
+
+      wMsg.className = "ok";
+      wMsg.textContent = " Data warga berhasil diperbarui.";
+
+      return;
+    }
+
+    /* =========================
+       MODE TAMBAH
+    ========================== */
+
+    const namaNormal = nama.toLowerCase();
+
+    const sudahAda = state.warga.some(item => {
+      const namaLama = String(item.nama || "")
+        .trim()
+        .toLowerCase();
+
+      return namaLama === namaNormal;
+    });
 
     if (sudahAda) {
-
       return alert(
         "Data warga sudah terdaftar.\n\n" +
         `Nama: ${nama}\n\n` +
@@ -2374,90 +2478,131 @@ async function addWarga() {
       );
     }
 
-
-    /* =========================
-       BUAT DATA WARGA BARU
-    ========================= */
-
     const newWarga = {
-
-      id:
-        uid(),
-
-      nama:
-
-        nama,
-
-      blok:
-
-        wBlok.value.trim(),
-
-      hp:
-
-        wHp.value.trim(),
-
-      status:
-
-        wStatus.value
-
+      id: uid(),
+      nama: nama,
+      blok: blok,
+      hp: hp,
+      status: status
     };
 
-
-    /* =========================
-       STATE BERIKUTNYA
-    ========================= */
-
     const nextState = {
-
       ...state,
-
       warga: [
         ...state.warga,
         newWarga
       ]
-
     };
 
-
-    /* =========================
-       SIMPAN
-    ========================= */
-
-    await save(
-      nextState,
-      "wMsg"
-    );
-
-
-    /*
-     * FORM HANYA DIKOSONGKAN
-     * SETELAH SAVE BERHASIL.
-     */
+    await save(nextState, "wMsg");
 
     wNama.value = "";
-
     wBlok.value = "";
-
     wHp.value = "";
-
+    wStatus.value = "Aktif";
 
   } catch (e) {
 
-    wMsg.className =
-      "err";
-
-    wMsg.textContent =
-      " Gagal: " +
-      e.message;
+    wMsg.className = "err";
+    wMsg.textContent = " Gagal: " + e.message;
   }
 }
 
 
-  /* =========================
-   HAPUS WARGA
-   DILINDUNGI DARI PENGHAPUSAN
-   JIKA SUDAH MEMILIKI RIWAYAT KAS
+/* =========================
+   EDIT DATA WARGA
 ========================= */
+
+function editWarga(i) {
+
+  const warga = state.warga[i];
+
+  if (!warga) {
+    return alert("Data warga tidak ditemukan.");
+  }
+
+  editingWargaIndex = i;
+
+  wNama.value = warga.nama || "";
+  wBlok.value = warga.blok || "";
+  wHp.value = warga.hp || "";
+  wStatus.value = warga.status || "Aktif";
+
+  const title = document.getElementById("wargaFormTitle");
+  const saveButton = document.getElementById("wSaveButton");
+  const cancelButton = document.getElementById("wCancelButton");
+
+  if (title) {
+    title.textContent = "Edit Data Warga";
+  }
+
+  if (saveButton) {
+    saveButton.textContent = "Update Data";
+  }
+
+  if (cancelButton) {
+    cancelButton.style.display = "inline-block";
+  }
+
+  const formCard = document.getElementById("wargaFormCard");
+
+  if (formCard) {
+    formCard.closest(".card")?.classList.add("editing-warga");
+  }
+
+  wMsg.className = "";
+  wMsg.textContent = " Sedang mengedit: " + (warga.nama || "");
+
+  wNama.focus();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+/* =========================
+   BATAL EDIT WARGA
+========================= */
+
+function cancelEditWarga(showMessage = true) {
+
+  editingWargaIndex = -1;
+
+  wNama.value = "";
+  wBlok.value = "";
+  wHp.value = "";
+  wStatus.value = "Aktif";
+
+  const title = document.getElementById("wargaFormTitle");
+  const saveButton = document.getElementById("wSaveButton");
+  const cancelButton = document.getElementById("wCancelButton");
+
+  if (title) {
+    title.textContent = "Tambah Data Warga";
+  }
+
+  if (saveButton) {
+    saveButton.textContent = "Simpan";
+  }
+
+  if (cancelButton) {
+    cancelButton.style.display = "none";
+  }
+
+  const formCard = document.getElementById("wargaFormCard");
+
+  if (formCard) {
+    formCard.closest(".card")?.classList.remove("editing-warga");
+  }
+
+  if (showMessage) {
+    wMsg.className = "";
+    wMsg.textContent = "";
+  }
+}
+
 
 async function delWarga(i) {
 
